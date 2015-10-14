@@ -13,9 +13,10 @@ Surfaceflinger trace file ends with '_surfaceflinger_trace.txt' and process trac
 	2.python get_fps.py
 FPS result pretents in output file ( end with '_fps_result.txt').
 ###Get performTraversals time list and frequency
-	1.Fill in the 'performtraversals_config.ini' config file to get performtraversals time and results.
+	1.Fill in the 'performtraversals_config.ini' config file to get 
+    performtraversals time and results.
 	2.py get_performtraversals_frequency_and_time.py
-Result presents in file ( end with '_performtraversals_' + minimum_time + '.txt'), and includes follows.
-	1.All performTraversals function start time and cost time list during given time.
-	2.Total performTraversals function number.
-	3.Frequency for performTraversals function (/s).
+Result presents in file ( end with '\_performtraversals_' + minimum_time + '.txt'), and includes follows.
+	*All performTraversals function start time and cost time list during given time.
+	*Total performTraversals function number.
+	*Frequency for performTraversals function (/s).
