@@ -16,12 +16,12 @@ def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time):
             continue
         time = float(items[TIME_INDEX].strip(':'))
         last_item = items[-1]
-        if ': B|' in line:
+        if ': B' in line:
             if 'performTraversals' in last_item:
                 current_time = time
             else:
                 child_func_number += 1
-        elif ': E\\' in line:
+        elif ': E' in line:
             if child_func_number == 0:
                 delta_time = time - current_time
                 time_tuple = (current_time,delta_time)
@@ -29,8 +29,8 @@ def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time):
                     time_list.append(time_tuple)
             else:
                 child_func_number -= 1
-        else:
-            print last_item
+        #else:
+        #    print last_item
     return time_list
 
 
