@@ -40,8 +40,9 @@ def read_file_and_count(input_file_name,start_time,total_time):
 
 def read_config_and_run():
     config = ConfigParser.ConfigParser()
-    config.readfp(open('fps_config.ini'))
-    app_name = config.get('Test object','app_name')    
+    config.readfp(open('app_config.ini'))
+    app_name = config.get('Test object','app_name') 
+    config.readfp(open('fps_config.ini'))   
     start_time = float(config.get('Time','start_time'))
     total_time = float(config.get('Time','total_time'))
     input_file_name = app_name + '_surfaceflinger_trace.txt'
@@ -55,5 +56,5 @@ def read_config_and_run():
     result_file.write('------------------------------------------\n')
 
 if __name__ == '__main__':
-    read_config_and_get_run()  
+    read_config_and_run()  
      

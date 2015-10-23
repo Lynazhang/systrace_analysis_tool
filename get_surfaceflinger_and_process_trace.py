@@ -3,10 +3,9 @@ import sys
 import string
 import ConfigParser
 
-def write_line_to_surfaceflinger_file(line,file,start=0):
-        TIME_INDEX = 3
+def write_line_to_surfaceflinger_file(line,file,time_index,start=0):
         items = line.split()
-        time = items[TIME_INDEX].strip(':')
+        time = items[time_index].strip(':')
         if start == 0:
             last_item = items[len(items)-1]
             value = last_item[len(last_item)-4]
@@ -22,6 +21,7 @@ def read_configs_and_run():
     main_activity = config.get('Test object','main_activity')
     process_PID = config.get('PID','process_pid')
     surfaceflinger_PID = config.get('PID','surfaceflinger_pid')
+    time_index = int(config.get('Script keys','time_index'))
     input_file_name = config.get('File','input_file')
     surfaceflinger_file = file(app_name + '_surfaceflinger_trace.txt','w')
     app_process_file = file(app_name + '_process_trace.txt','w')
@@ -31,13 +31,13 @@ def read_configs_and_run():
     for line in open(input_file_name):
     	# record start time line
         if is_start == 1 and '<...>-' in line:
-            time = write_line_to_surfaceflinger_file(line,surfaceflinger_file,1)
+            time = write_line_to_surfaceflinger_file(line,surfaceflinger_file,time_index,1)
             app_process_file.write(time + '\n')
             is_start = 0
         if process_line_key in line:
             app_process_file.write(line)
         elif surfaceflinger_line_key in line:
-            write_line_to_surfaceflinger_file(line,surfaceflinger_file)
+            write_line_to_surfaceflinger_file(line,surfaceflinger_file,time_index)
 
 if __name__ == '__main__':
     read_configs_and_run()	

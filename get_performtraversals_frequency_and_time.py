@@ -3,10 +3,9 @@ import sys
 import string
 import ConfigParser
 
-def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time):
+def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time,time_index):
     time_list = []
     child_func_number = 0
-    TIME_INDEX = 3
     current_time = 0
     for line in open(app_name + '_process_trace.txt'):
         items = line.split()
@@ -14,7 +13,7 @@ def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time):
             start_time += float(items[0])
             end_time += float(items[0])
             continue
-        time = float(items[TIME_INDEX].strip(':'))
+        time = float(items[time_index].strip(':'))
         last_item = items[-1]
         if ': B' in line:
             if 'performTraversals' in last_item:
@@ -45,15 +44,17 @@ def write_performtraversals_time_file(time_list,app_name,minimum_time,delta_time
 
 def read_configs_and_run():
     config = ConfigParser.ConfigParser()
+    config.readfp(open('app_config.ini'))
+    app_name = config.get('Test object','app_name') 
+    time_index = int(config.get('Script keys','time_index'))
     config.readfp(open('performtraversals_config.ini'))
-    app_name = config.get('Test object','app_name')    
     minimum_time = float(config.get('Time','minimum_time'))
     start_time = float(config.get('Time','start_time'))
     end_time = float(config.get('Time','end_time'))
     #travert unit to 's'
     minimum_time /= 1000
     #TODO get start_time and end_time
-    time_list = get_performtraversals_time_list(app_name,minimum_time,start_time,end_time)
+    time_list = get_performtraversals_time_list(app_name,minimum_time,start_time,end_time,time_index)
     write_performtraversals_time_file(time_list,app_name,minimum_time,end_time - start_time)
 
 if __name__ == '__main__':
