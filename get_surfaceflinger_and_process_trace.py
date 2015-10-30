@@ -8,7 +8,7 @@ def write_line_to_surfaceflinger_file(line,file,time_index,start=0):
         time = items[time_index].strip(':')
         if start == 0:
             last_item = items[len(items)-1]
-            value = last_item[len(last_item)-4]
+            value = last_item[len(last_item)-1]
             file.write(time + '\t' + value + '\n')
         else:
             file.write(time + '\n')
