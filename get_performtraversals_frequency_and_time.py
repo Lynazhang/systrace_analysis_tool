@@ -42,12 +42,14 @@ def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time,ti
     return time_list,longest_frame_start_time,longest_frame_length
 
 
-def write_performtraversals_time_file(time_list,app_name,minimum_time,delta_time,longest_frame_start_time,longest_frame_length):
+def write_performtraversals_time_file(time_list,app_name,minimum_time,start_time,end_time,longest_frame_start_time,longest_frame_length):
     time_file = file(app_name + '_performtraversals_' + str(int(minimum_time*1000)) +'.txt','w')
     for items in time_list:
         time_file.write(str(items[0]) + '\t' + str(items[1]) + '\n')
     total_number = len(time_list)
-    frequency = total_number * 1.0 / delta_time
+    frequency = total_number * 1.0 / (end_time - start_time)
+    time_file.write('Start time:\t' + str(start_time) + '\n')
+    time_file.write('End time:\t' + str(end_time) + '\n')
     time_file.write('Total:\t' + str(len(time_list)) + '\n')
     time_file.write('Frequency:\t' + str(frequency) + '\n')
     time_file.write('Longest frame start time:\t' + str(longest_frame_start_time) + '\n')
@@ -64,9 +66,8 @@ def read_configs_and_run():
     end_time = float(config.get('Time','end_time'))
     #travert unit to 's'
     minimum_time /= 1000
-    #TODO get start_time and end_time
     time_list,longest_frame_start_time,longest_frame_length = get_performtraversals_time_list(app_name,minimum_time,start_time,end_time,time_index)
-    write_performtraversals_time_file(time_list,app_name,minimum_time,end_time - start_time,longest_frame_start_time,longest_frame_length)
+    write_performtraversals_time_file(time_list,app_name,minimum_time,start_time,end_time,longest_frame_start_time,longest_frame_length)
 
 if __name__ == '__main__':
     read_configs_and_run()
