@@ -28,11 +28,12 @@ def get_performtraversals_time_list(app_name,minimum_time,start_time,end_time,ti
             if child_func_number == 0:
                 delta_time = time - current_time
                 time_tuple = (current_time,delta_time)
-                if longest_frame_length < delta_time:
-                    longest_frame_length = delta_time
-                    longest_frame_start_time = current_time					
+				
                 if delta_time >= minimum_time and current_time >= start_time and current_time <= end_time:
                     time_list.append(time_tuple)
+                    if longest_frame_length < delta_time:
+                        longest_frame_length = delta_time
+                        longest_frame_start_time = current_time	
             else:
                 child_func_number -= 1
         #else:
